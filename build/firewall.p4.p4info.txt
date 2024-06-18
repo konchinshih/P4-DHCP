@@ -1,0 +1,377 @@
+# proto-file: p4/config/v1/p4info.proto
+# proto-message: p4.config.v1.P4Info
+
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 50302149
+    name: "MyIngress.direction_table"
+    alias: "direction_table"
+  }
+  match_fields {
+    id: 1
+    name: "standard_metadata.ingress_port"
+    bitwidth: 9
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: LPM
+  }
+  action_refs {
+    id: 23938400
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 37375156
+    name: "MyIngress.ipv4_lpm"
+    alias: "ipv4_lpm"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: LPM
+  }
+  action_refs {
+    id: 28792405
+  }
+  action_refs {
+    id: 25652968
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 50105209
+    name: "MyIngress.inside_nat"
+    alias: "inside_nat"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.port.srcPort"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  match_fields {
+    id: 3
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 4
+    name: "hdr.port.dstPort"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  match_fields {
+    id: 5
+    name: "hdr.ipv4.protocol"
+    bitwidth: 8
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23113063
+  }
+  action_refs {
+    id: 25652968
+  }
+  action_refs {
+    id: 22952082
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 45567413
+    name: "MyIngress.outside_nat"
+    alias: "outside_nat"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.port.srcPort"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  match_fields {
+    id: 3
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 4
+    name: "hdr.port.dstPort"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  match_fields {
+    id: 5
+    name: "hdr.ipv4.protocol"
+    bitwidth: 8
+    match_type: EXACT
+  }
+  action_refs {
+    id: 25236615
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 43439892
+    name: "MyIngress.icmp_snat"
+    alias: "icmp_snat"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 3
+    name: "hdr.icmp_echo.id"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20305957
+  }
+  action_refs {
+    id: 25652968
+  }
+  action_refs {
+    id: 22952082
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 34863754
+    name: "MyIngress.icmp_dnat"
+    alias: "icmp_dnat"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 3
+    name: "hdr.icmp_echo.id"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23809461
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 25652968
+    name: "MyIngress.drop"
+    alias: "drop"
+  }
+}
+actions {
+  preamble {
+    id: 28792405
+    name: "MyIngress.ipv4_forward"
+    alias: "ipv4_forward"
+  }
+  params {
+    id: 1
+    name: "dstAddr"
+    bitwidth: 48
+  }
+  params {
+    id: 2
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 23938400
+    name: "MyIngress.set_direction"
+    alias: "set_direction"
+  }
+  params {
+    id: 1
+    name: "dir"
+    bitwidth: 2
+  }
+}
+actions {
+  preamble {
+    id: 23113063
+    name: "MyIngress.snat"
+    alias: "snat"
+  }
+  params {
+    id: 1
+    name: "nat_ipaddr"
+    bitwidth: 32
+  }
+  params {
+    id: 2
+    name: "port_num1"
+    bitwidth: 16
+  }
+}
+actions {
+  preamble {
+    id: 25236615
+    name: "MyIngress.dnat"
+    alias: "dnat"
+  }
+  params {
+    id: 1
+    name: "nat_ipaddr"
+    bitwidth: 32
+  }
+  params {
+    id: 2
+    name: "port_num2"
+    bitwidth: 16
+  }
+}
+actions {
+  preamble {
+    id: 20305957
+    name: "MyIngress.nat_ping"
+    alias: "nat_ping"
+  }
+  params {
+    id: 1
+    name: "nat_ipaddr"
+    bitwidth: 32
+  }
+}
+actions {
+  preamble {
+    id: 23809461
+    name: "MyIngress.nat_pong"
+    alias: "nat_pong"
+  }
+  params {
+    id: 1
+    name: "nat_ipaddr"
+    bitwidth: 32
+  }
+}
+actions {
+  preamble {
+    id: 22952082
+    name: "MyIngress.send_to_cpu"
+    alias: "send_to_cpu"
+  }
+}
+actions {
+  preamble {
+    id: 25179894
+    name: "MyIngress.send_dhcp_to_host"
+    alias: "send_dhcp_to_host"
+  }
+}
+controller_packet_metadata {
+  preamble {
+    id: 80671331
+    name: "packet_in"
+    alias: "packet_in"
+    annotations: "@controller_header(\"packet_in\")"
+  }
+  metadata {
+    id: 1
+    name: "mes_type"
+    bitwidth: 7
+  }
+  metadata {
+    id: 2
+    name: "ingress_port"
+    bitwidth: 9
+  }
+}
+controller_packet_metadata {
+  preamble {
+    id: 75327753
+    name: "packet_out"
+    alias: "packet_out"
+    annotations: "@controller_header(\"packet_out\")"
+  }
+  metadata {
+    id: 1
+    name: "mes_type"
+    bitwidth: 7
+  }
+  metadata {
+    id: 2
+    name: "egress_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 3
+    name: "ip_addr"
+    bitwidth: 32
+  }
+  metadata {
+    id: 4
+    name: "port_num"
+    bitwidth: 16
+  }
+}
+type_info {
+}
